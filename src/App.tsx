@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 // import Footer from "./components/Footer"
 import HomePage from "./components/Homepage"
 import GamesPage from "./components/Games"
+import Quiz from "./Games/Quiz"
 import ServicesPage from "./components/Services"
 import CustomersPage from "./components/Customers"
 import AboutPage from "./components/About"
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/Customers" element={<CustomersPage />} />
           <Route path="/About" element={<AboutPage />} />
           <Route path="/Feedback" element={<FeedbackPage />} />
+          <Route path="/Games/Quiz" element={<Quiz />} />
         </Routes>
       </main>
       {/* <Footer /> */}

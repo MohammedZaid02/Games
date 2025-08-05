@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 import { motion,easeOut } from "framer-motion"
 import { Card } from "../components/ui/card"
 import { Button } from "../components/ui/button"
@@ -150,7 +151,8 @@ const getDifficultyColor = (difficulty: string): string => {
   }
 }
 
-function GamesPage(): React.ReactNode {
+  const GamesPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <Header />
@@ -280,7 +282,14 @@ function GamesPage(): React.ReactNode {
 
                       {/* Play Button */}
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button className="w-full bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-sm">
+                        <Button
+                          className="w-full bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-sm"
+                          onClick={() => {
+                            if (game.category === "Quiz") {
+                              navigate("/Games/Quiz");
+                            }
+                          }}
+                        >
                           <Play className="mr-2 h-4 w-4" />
                           Play Now
                         </Button>
