@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import HomePage from "./components/Homepage"
 import GamesPage from "./components/Games"
 import Quiz from "./Games/Quiz"
+import FruitNinja from "./Games/FruitNinja"
 import ServicesPage from "./components/Services"
 import CustomersPage from "./components/Customers"
 import AboutPage from "./components/About"
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/About" element={<AboutPage />} />
           <Route path="/Feedback" element={<FeedbackPage />} />
           <Route path="/Games/Quiz" element={<Quiz />} />
+          <Route path="/Games/FruitNinja" element={<FruitNinja />} />
         </Routes>
       </main>
       {/* <Footer /> */}

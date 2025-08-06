@@ -86,32 +86,19 @@ const allGames: Game[] = [
   },
   {
     id: 5,
-    title: "News Race",
+    title: "Fruit Ninja",
     description:
-      "Race against time to answer breaking news questions before others",
+      "Slice fruits mid-air with precision and speed to become the ultimate ninja!",
     longDescription:
-      "Compete with other players in real-time to answer breaking news questions. Speed and accuracy are key to winning.",
-    color: "from-blue-600 via-indigo-600 to-purple-600",
-    difficulty: "Medium",
-    players: "4.1K",
-    avgTime: "8 min",
-    rating: 4.8,
-    category: "Competitive",
+      "Fruit Ninja is a fast-paced action game where you use your blade to slice as many flying fruits as possible. Avoid bombs, master combos, and challenge your reflexes in this addictive arcade classic. Whether you're aiming for a high score or just want juicy satisfaction, every slice counts!",
+    color: "from-green-400 via-yellow-500 to-red-500",
+    difficulty: "Easy to Master, Hard to Perfect",
+    players: "1.2M",
+    avgTime: "3-5 min per session",
+    rating: 4.7,
+    category: "FruitNinja",
   },
-  {
-    id: 6,
-    title: "Fact Check",
-    description:
-      "Identify fake news and misinformation in this critical thinking game",
-    longDescription:
-      "Develop your critical thinking skills by identifying fake news and misinformation. Learn to spot reliable sources and fact-check information.",
-    color: "from-yellow-500 via-orange-500 to-red-500",
-    difficulty: "Hard",
-    players: "2.1K",
-    avgTime: "12 min",
-    rating: 4.5,
-    category: "Education",
-  },
+  
 ]
 
 const containerVariants = {
@@ -287,6 +274,8 @@ const getDifficultyColor = (difficulty: string): string => {
                           onClick={() => {
                             if (game.category === "Quiz") {
                               navigate("/Games/Quiz");
+                            } else if (game.category === "FruitNinja") {
+                              navigate("/Games/FruitNinja");
                             }
                           }}
                         >
@@ -338,9 +327,8 @@ const getDifficultyColor = (difficulty: string): string => {
           </div>
         </motion.section>
       </main>
-
       <Footer />
     </div>
-  )
+  );
 }
 export default GamesPage;
