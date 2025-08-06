@@ -98,6 +98,21 @@ const allGames: Game[] = [
     rating: 4.7,
     category: "FruitNinja",
   },
+  {
+  id: 6,
+  title: "Four in a Row",
+  description:
+    "Strategically drop discs to connect four in a row and outsmart your opponent!",
+  longDescription:
+    "Four in a Row is a tactical multiplayer game where players take turns dropping discs into a 7x6 grid, aiming to connect four in a line — horizontally, vertically, or diagonally. Challenge a friend in 2-player mode or test your wits against an AI opponent in solo mode. With vibrant animations, real-time feedback, and a dynamic leaderboard, every move counts in this visually engaging and competitive classic!",
+  color: "from-blue-500 via-purple-600 to-indigo-600",
+  difficulty: "Easy to Play, Strategic to Win",
+  players: "950K",
+  avgTime: "4–6 min per match",
+  rating: 4.6,
+  category: "Row"
+}
+
   
 ]
 
@@ -276,6 +291,8 @@ const getDifficultyColor = (difficulty: string): string => {
                               navigate("/Games/Quiz");
                             } else if (game.category === "FruitNinja") {
                               navigate("/Games/FruitNinja");
+                            }else if (game.category === "Row") {
+                              navigate("/Games/Row");
                             }
                           }}
                         >

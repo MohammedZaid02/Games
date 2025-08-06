@@ -10,6 +10,7 @@ import ServicesPage from "./components/Services"
 import CustomersPage from "./components/Customers"
 import AboutPage from "./components/About"
 import FeedbackPage from "./components/Feedback"
+import Row from "./Games/Row"
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/Feedback" element={<FeedbackPage />} />
           <Route path="/Games/Quiz" element={<Quiz />} />
           <Route path="/Games/FruitNinja" element={<FruitNinja />} />
+          <Route path="/Games/Row" element={<Row />} />
         </Routes>
       </main>
       {/* <Footer /> */}
