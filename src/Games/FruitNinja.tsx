@@ -1,25 +1,49 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-const FruitNinjaGame = () => {
-  const [gameState, setGameState] = useState('menu'); // 'menu', 'playing', 'gameOver'
-  const [score, setScore] = useState(0);
-  const [playerName, setPlayerName] = useState('');
-  const [fruits, setFruits] = useState([]);
-  const [leaderboard, setLeaderboard] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(60);
-  const [combo, setCombo] = useState(0);
-  const [difficulty, setDifficulty] = useState('medium');
-  const [slicedFruits, setSlicedFruits] = useState(new Set());
-  const [sliceEffects, setSliceEffects] = useState([]);
-  const gameAreaRef = useRef(null);
-  const fruitIdCounter = useRef(0);
-  const sliceEffectCounter = useRef(0);
+// Type definitions
+type Fruit = {
+  id: number;
+  emoji: string;
+  x: number;
+  y: number;
+  rotation: number;
+  speed: number;
+  sliced?: boolean;
+};
+
+type LeaderboardEntry = {
+  name: string;
+  score: number;
+  timestamp: number;
+};
+
+type SliceEffect = {
+  id: number;
+  x: number;
+  y: number;
+  timestamp: number;
+};
+
+const FruitNinjaGame: React.FC = () => {
+  const [gameState, setGameState] = useState<'menu' | 'playing' | 'gameOver'>('menu');
+  const [score, setScore] = useState<number>(0);
+  const [playerName, setPlayerName] = useState<string>('');
+  const [fruits, setFruits] = useState<Fruit[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [combo, setCombo] = useState<number>(0);
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
+  const [slicedFruits, setSlicedFruits] = useState<Set<number>>(new Set());
+  const [sliceEffects, setSliceEffects] = useState<SliceEffect[]>([]);
+  const gameAreaRef = useRef<HTMLDivElement | null>(null);
+  const fruitIdCounter = useRef<number>(0);
+  const sliceEffectCounter = useRef<number>(0);
 
   const fruitEmojis = ['🍎', '🍊', '🍌', '🍇', '🍓', '🥝', '🍑', '🍉', '🥭', '🍍'];
 
   // Difficulty settings
-  const difficultySettings = {
+  const difficultySettings: Record<'easy' | 'medium' | 'hard', { spawnRate: number; speedMultiplier: number; fruitCount: number }> = {
     easy: { spawnRate: 1200, speedMultiplier: 0.7, fruitCount: 3 },
     medium: { spawnRate: 800, speedMultiplier: 1, fruitCount: 4 },
     hard: { spawnRate: 500, speedMultiplier: 1.5, fruitCount: 6 }
@@ -30,7 +54,7 @@ const FruitNinjaGame = () => {
     if (gameState !== 'playing') return;
 
     const settings = difficultySettings[difficulty];
-    const fruit = {
+    const fruit: Fruit = {
       id: fruitIdCounter.current++,
       emoji: fruitEmojis[Math.floor(Math.random() * fruitEmojis.length)],
       x: Math.random() * 80 + 10, // 10% to 90% of screen width
@@ -83,7 +107,7 @@ const FruitNinjaGame = () => {
   }, [playerName, score]);
 
   // Handle fruit slice
-  const sliceFruit = useCallback((fruitId, event) => {
+  const sliceFruit = useCallback((fruitId: number, event: React.MouseEvent | React.TouchEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
@@ -98,7 +122,7 @@ const FruitNinjaGame = () => {
     setSlicedFruits(prev => new Set([...prev, fruitId]));
     
     // Create slice effect
-    const sliceEffect = {
+    const sliceEffect: SliceEffect = {
       id: sliceEffectCounter.current++,
       x: fruit.x,
       y: fruit.y,
@@ -131,7 +155,7 @@ const FruitNinjaGame = () => {
 
   // Game timer
   useEffect(() => {
-    let timer;
+    let timer: ReturnType<typeof setInterval> | undefined;
     if (gameState === 'playing' && timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft(prev => {
@@ -143,19 +167,23 @@ const FruitNinjaGame = () => {
         });
       }, 1000);
     }
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [gameState, timeLeft, endGame]);
 
   // Fruit spawning
   useEffect(() => {
-    let spawnTimer;
+    let spawnTimer: ReturnType<typeof setInterval> | undefined;
     if (gameState === 'playing') {
       const settings = difficultySettings[difficulty];
       spawnTimer = setInterval(() => {
         generateFruit();
       }, settings.spawnRate);
     }
-    return () => clearInterval(spawnTimer);
+    return () => {
+      if (spawnTimer) clearInterval(spawnTimer);
+    };
   }, [gameState, generateFruit, difficulty]);
 
   // Remove fruits that fall off screen
@@ -210,7 +238,7 @@ const FruitNinjaGame = () => {
                 {Object.keys(difficultySettings).map((level) => (
                   <button
                     key={level}
-                    onClick={() => setDifficulty(level)}
+                    onClick={() => setDifficulty(level as 'easy' | 'medium' | 'hard')}
                     className={`px-6 py-3 rounded-full font-bold transition-all duration-200 transform hover:scale-105 ${
                       difficulty === level
                         ? 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-lg'
